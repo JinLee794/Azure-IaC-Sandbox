@@ -40,7 +40,7 @@ resource "azurerm_windows_virtual_machine" "this" {
   provision_vm_agent         = true
   admin_username             = var.admin_username
   admin_password             = data.azurerm_key_vault_secret.admin_password.value
-  
+
   computer_name              = var.vm_name
   allow_extension_operations = true
   network_interface_ids = [
