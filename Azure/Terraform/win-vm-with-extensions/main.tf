@@ -27,7 +27,6 @@ resource "azurerm_network_interface" "vm_nic" {
   }
 }
 
-
 resource "azurerm_windows_virtual_machine" "this" {
   name                       = var.name
   resource_group_name        = var.resource_group_name
@@ -40,12 +39,12 @@ resource "azurerm_windows_virtual_machine" "this" {
   provision_vm_agent         = true
   admin_username             = var.admin_username
   admin_password             = data.azurerm_key_vault_secret.admin_password.value
-
   computer_name              = var.vm_name
   allow_extension_operations = true
   network_interface_ids = [
     azurerm_network_interface.vm_nic.id,
   ]
+
   identity {
     type = "SystemAssigned"
   }
@@ -61,6 +60,7 @@ resource "azurerm_windows_virtual_machine" "this" {
     sku       = "2022-Datacenter"
     version   = "latest"
   }
+
   timeouts {
     create = "90m"
     delete = "90m"
@@ -75,6 +75,7 @@ resource "azurerm_virtual_machine_extension" "IaaSAntimalware" {
   publisher            = "Microsoft.Azure.Security"
   type                 = "IaaSAntimalware"
   type_handler_version = "1.5"
+
   tags = var.tags
 }
 
