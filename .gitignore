@@ -10,7 +10,7 @@ vendor
 .terraform
 .vscode
 *.tfstate
-*.tfstate.backup
+*.tfstate.backup*
 *.out
 .terragrunt-cache
 .bundle
