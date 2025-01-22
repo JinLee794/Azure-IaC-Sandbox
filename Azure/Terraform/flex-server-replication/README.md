@@ -19,6 +19,25 @@ This project automates the deployment and management of Azure MySQL Flexible Ser
 
 1. **Set Environment Variables**: Update the values in `deploy.sh` with your own configuration or provide them when prompted.
 
+    [./deploy.sh](./deploy.sh)
+    ```bash 
+    #!/bin/bash
+
+    ## Update these values with your own
+    # Primary Config
+    primary_resource_group="flex-primary"
+    primary_location="South Central US"
+    primary_server_name="example-primary-mysql"
+
+    # Desired Replica Config
+    target_location="West US"
+    target_resource_group="flex-secondary"
+    target_server_name="example-replica-mysql-westus"
+
+    # To be able to map to the Terraform resource in the tfstate to import
+    tf_resource_id="azurerm_mysql_flexible_server.replica"
+    ```
+
     You can also set the environment variables using `TF_VAR` notation (i.e within a CICD pipeline) to minimize accidental recreates or unnecessary updates.
 
     ```bash
@@ -26,16 +45,21 @@ This project automates the deployment and management of Azure MySQL Flexible Ser
     # export TF_VAR_administrator_password="<your password here>"
     ```
 
+
+
 2. **Initialize and Apply Terraform Configuration**:
     ```sh
     ./deploy.sh
-
+    ```
     This script will:
     - Initialize Terraform.
-    - Check if the replica exists in the target resource group.
-        - if not, sets the flag `TF_VAR_replica_exists` to false
+    - Check if the replica exists in the target resource group via the `az cli`.
+        - if not, sets the flag `TF_VAR_replica_exists` to `false`
+        - otherwise, sets the flag `TF_VAR_replica_exists` to `true`
     - Apply the Terraform configuration to create the primary and replica MySQL Flexible Servers.
     - If the replica does not exist in the target rg, it will move the replica to the target resource group and update the Terraform state.
+    
+        > **Note**: The `var.replica_exists` flag in the `azurerm_mysql_flexible_server` replica configuration (lines 48-57) is crucial for ensuring the Terraform deployment properly recognizes the resource in the `tfstate` after it has been moved by `./replica.sh`. 
 
 3. **Verify Terraform State**:
     After running the deployment script, the Terraform state will be verified to ensure no changes are detected.

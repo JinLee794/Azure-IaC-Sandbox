@@ -49,9 +49,9 @@ resource "azurerm_mysql_flexible_server" "replica" {
     name                = var.secondary_server_name
 
     resource_group_name = var.replica_exists ? azurerm_resource_group.secondary.name : azurerm_resource_group.primary.name
+    create_mode         = var.replica_exists ? null : "Replica"
     location            = azurerm_resource_group.secondary.location 
     source_server_id    = azurerm_mysql_flexible_server.primary.id
-    create_mode         = var.replica_exists ? null : "Replica"
 
     tags = var.tags
 }
