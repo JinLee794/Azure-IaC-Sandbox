@@ -1,7 +1,7 @@
 # Flex Server Replication Deployment
 
 This project automates the deployment and management of Azure MySQL Flexible Servers, including the creation of primary and replica servers, and the movement of replicas between resource groups using Terraform and Azure CLI.
-> **Disclaimer**: This project provides a custom workaround for managing MySQL Flexible Server replication. Users of this script must take full ownership of the lifecycle and management of the resources created. Please note that native functionality for MySQL Flexible Server replication is targeted for mid CY 2025.
+> **Disclaimer**: This project provides a custom workaround for managing MySQL Flexible Server replication. Users of this script must take full ownership of the lifecycle and management of the resources created. Please note that native functionality for MySQL Flexible Server replication is targeted for mid FY 2025.
 ## Prerequisites
 
 - [Terraform](https://www.terraform.io/downloads.html) installed
