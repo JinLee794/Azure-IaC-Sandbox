@@ -70,8 +70,8 @@ main() {
     export TF_VAR_secondary_location=$target_location
     export TF_VAR_secondary_server_name=$target_server_name
 
-    export TF_VAR_storage_size_gb=20
-    export TF_VAR_sku_name="GP_Standard_D2ds_v4"
+    # export TF_VAR_storage_size_gb=20
+    # export TF_VAR_sku_name="GP_Standard_D2ds_v4"
 
     # Check if the replica exists
     echo "----------------------------------------"
